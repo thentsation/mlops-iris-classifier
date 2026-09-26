@@ -1,119 +1,58 @@
 # Iris Classifier MLOps Project
 
-This project is an example of how to apply MLOps for sorting Iris flowers using BentoML, MLflow, DVC, and scikit-learn. The model is trained, saved, and served using BentoML, with experiment tracking via MLflow and data versioning with DVC.
+[![Python CI](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_python.yaml/badge.svg)](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_python.yaml)
+[![Docker CI/CD](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_docker.yaml/badge.svg)](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_docker.yaml)
 
-## Project Structure
+> Leia em [português](README.pt-br.md).
 
-The project structure is organized as follows:
+An end-to-end MLOps example for an Iris classifier: [DVC](https://dvc.org/) for data versioning, [MLflow](https://mlflow.org/) for experiment tracking, and [BentoML](https://www.bentoml.com/) for model serving, on top of scikit-learn.
 
+An in-depth write-up of the productization of this project — including a broken DVC remote that never actually worked — is available in [ARTIGO.md](ARTIGO.md) (pt-br) / [ARTIGO.en-us.md](ARTIGO.en-us.md) (en-us).
+
+## Project structure
+
+```text
+src/
+├── config/config.py            # Config (data path, model name, experiment name)
+├── data/data_loader.py          # reads the already-`dvc pull`ed local CSV
+├── training/train_model.py       # RandomForestClassifier + train/test split + accuracy
+├── registry/model_registry.py    # logs to MLflow, saves to the BentoML model store
+├── serving/iris_service.py        # IrisClassifier (plain, DI-friendly) + IrisClassifierService (@bentoml.service wrapper)
+└── main.py                        # load -> train -> log (MLflow) -> save (BentoML)
 ```
-mlops-iris-classifier/
-├── services/
-│ └── iris_service.py # BentoML Service to serve the trained model
-├── date/
-│ └── iris.csv # Iris Data (used for training)
-├── models/
-│ └── iris_classifier.pkl # Trained model (saved by MLflow and BentoML)
-├── train.py # Script to train the model and register with MLflow and BentoML
-├── requirements.txt # Project dependencies
-└── README.md
-```
 
-
-- **`services/iris_service.py`**: Contains the BentoML service that loads the model and exposes an API to make predictions.
-- **`train.py`**: Script that trains the classification model using Random Forest, records the results with MLflow, and saves the model with BentoML.
-- **`data/iris.csv`**: Data used for training (CSV file).
-- **`models/iris_classifier.pkl`**: File with the trained model, saved by BentoML and MLflow.
-- **`requirements.txt`**: Contains all the dependencies necessary for the project to function.
-
-## Requirements
-
-Before running the project, make sure you have Python 3.12+ installed.
-
-### Install dependencies
-
-1. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   ```
-
-2. Activate the virtual environment:
-   - On Linux/MacOS:
-     ```bash
-     source .venv/bin/activate
-     ```
-   - On Windows:
-     ```bash
-     .venvScriptsactivate
-     ```
-
-3. Install the dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### DVC Configuration
-
-This project uses DVC for data versioning. To configure DVC, run:
-
-1. Initialize the DVC:
-   ```bash
-   Divine Init
-   ```
-
-2. Download the sample data:
-   ```bash
-   dvc pull
-   ```
-
-
-## How to Run
-
-### 1. Model Training
-
-To train the model, run the 'train.py' script. It will:
-- Load the 'date/iris.csv' data.
-- Train a Random Forest model.
-- Register the model and its metrics with MLflow.
-- Save the template using BentoML.
-
-Run the script with the following command:
+## Getting started
 
 ```bash
-python train.py
+make install    # creates .venv and installs deps
+make data       # dvc pull - materializes data/iris.csv from the local DVC remote
+make train      # trains the model, logs to MLflow, saves it to the BentoML model store
+make serve      # bentoml serve --reload
 ```
 
-### 2. Serving the Model with BentoML
+- Swagger UI: http://localhost:3000/docs
+- API endpoint: `POST http://localhost:3000/classify`
+- MLflow UI: `.venv/bin/mlflow ui` (reads `./mlruns`, gitignored, generated locally by `make train`)
 
-Once you've trained and saved the model, you can serve the model's API using BentoML. The service will be available locally.
-
-To run the BentoML service, run:
+Run with Docker instead (the image trains the model at build time, from the CSV already pulled by CI/you):
 
 ```bash
-Bentoml serves services.iris_service
+make docker-build
+make docker-run
 ```
 
-This will launch a server at the 'http://127.0.0.1:3000' URL where the API will be available.
-
-### 3. Making Predictions
-
-You can make predictions using an HTTP client (such as 'curl' or 'Postman'), sending an input array to the API. The input and output format will be a **NumpyNdarray**.
-
-Example of how to make a request using curl:
+## Development
 
 ```bash
-curl -X 'POST' 
-  'http://127.0.0.1:3000/classify' 
-  -H 'accept: application/json' 
-  -h 'content-type: application/json' 
-  -d '[[5.1, 3.5, 1.4, 0.2]]'
+make test        # pytest
+make coverage     # pytest with coverage report
+make lint         # ruff check
+make format       # ruff format
+make typecheck    # mypy
 ```
 
-This will send a trait vector to the API, which will return the model's prediction.
+CI runs ruff, pytest (coverage gate), mypy and pip-audit on every push/PR, plus a scheduled daily run. Docker images are built (after `dvc pull`), scanned with Trivy, and published to GHCR on `main`. Dependabot keeps pip, the Docker base image, and GitHub Actions up to date, with patch/minor bumps auto-merged. Releases are tagged automatically with [python-semantic-release](https://python-semantic-release.readthedocs.io/).
 
-## Technologies Used
+## Data versioning with DVC
 
-- **BentoML**: Framework for serving and managing machine learning models.
-- **MLflow**: Model lifecycle management platform for tracking experiments and registering models.
-- **DVC**: Data version control, for dataset management in the project.
-- **scikit-learn**: Library for machine learning, used to train the classification model.
+`data/iris.csv` is DVC-tracked (`data/iris.csv.dvc`), backed by a **local, git-committed remote** (`.dvc-storage/`) instead of a cloud bucket — this keeps the example fully self-contained: `dvc pull` works right after `git clone`, with no cloud credentials to configure. Swap the remote (`dvc remote modify storage url s3://...`) for a real deployment.

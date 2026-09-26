@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.2 (2026-09-26)
+
+### Bug Fixes
+
+- Broaden Trivy's pip/_vendor skip-dirs to a recursive glob
+  ([`297b485`](https://github.com/thentsation/mlops-iris-classifier/commit/297b4854ec93129ed3a33652d22dab0ae93fcf9f))
+
+
 ## v1.0.1 (2026-09-26)
 
 ### Bug Fixes

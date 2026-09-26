@@ -1,14 +1,8 @@
-service: "src.serve:svc"
+service: "src.serving.iris_service:IrisClassifierService"
 labels:
-  owner: "time_ml"
-  stage: "dev"
+  owner: thentsation
+  project: mlops-iris-classifier
 include:
-  - "src"
-  - "requirements.txt"
+  - "src/**/*.py"
 python:
-  packages:
-    - bentoml==1.0.15
-    - mlflow==2.3.1
-    - scikit-learn==1.2.2
-    - pandas==1.5.3
-    - numpy
+  requirements_txt: "./config/requirements.txt"

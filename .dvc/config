@@ -1,4 +1,4 @@
 [core]
     remote = storage
 ['remote "storage"']
-    url = /home/ntsation/docs/mlops-iris-classifier/dvc
+    url = ../.dvc-storage

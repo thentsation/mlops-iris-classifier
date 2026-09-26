@@ -1,8 +1,8 @@
+import numpy as np
 from sklearn.metrics import accuracy_score
 
+
 class Metrics:
-    """Classe para avaliação de métricas."""
     @staticmethod
-    def calculate_accuracy(y_true, y_pred) -> float:
-        """Calcula a precisão."""
-        return accuracy_score(y_true, y_pred)
+    def calculate_accuracy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        return float(accuracy_score(y_true, y_pred))

@@ -74,6 +74,16 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Pull DVC data
+        run: |
+          pip install --no-cache-dir dvc
+          dvc pull
+
       - name: Set up QEMU (build arm64 no runner amd64)
         uses: docker/setup-qemu-action@v4
 

@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.4 (2026-09-28)
+
+### Bug Fixes
+
+- **ci**: Open lockfile PRs with RELEASE_PAT so CI runs on them
+  ([`89f353c`](https://github.com/thentsation/mlops-iris-classifier/commit/89f353c75564ebb5241e16e1a270f841878613b1))
+
+
 ## v1.0.3 (2026-09-28)
 
 ### Bug Fixes

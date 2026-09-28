@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.0.3 (2026-09-28)
+
+### Bug Fixes
+
+- Use RELEASE_PAT so dependabot auto-merge can write to PRs
+  ([`83a9a56`](https://github.com/thentsation/mlops-iris-classifier/commit/83a9a56f3cbe17727256728f3edf8143e6106793))
+
+
 ## v1.0.2 (2026-09-26)
 
 ### Bug Fixes

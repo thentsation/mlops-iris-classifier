@@ -38,7 +38,7 @@ docker-build: data
 	docker build -f docker/Dockerfile -t mlops-iris-classifier .
 
 docker-run:
-	docker run --rm -p 3000:3000 mlops-iris-classifier
+	docker run --rm -p 3002:3000 mlops-iris-classifier
 
 clean:
 	find . -type d -name __pycache__ -not -path './$(VENV)/*' -exec rm -rf {} +

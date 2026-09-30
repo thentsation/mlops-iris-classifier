@@ -5,4 +5,4 @@ services:
       dockerfile: docker/Dockerfile
     container_name: mlops-iris-classifier
     ports:
-      - '3000:3000'
+      - '3002:3000'

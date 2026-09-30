@@ -41,6 +41,8 @@ make docker-build
 make docker-run
 ```
 
+Com Docker (`make docker-run` ou `docker compose up`) a API fica publicada na porta **3002** do host (porta 3000 no container): http://localhost:3002/docs
+
 ## Desenvolvimento
 
 ```bash

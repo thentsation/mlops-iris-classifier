@@ -3,4 +3,4 @@ mlflow>=3.16,<3.17
 dvc>=3.67,<3.68
 scikit-learn>=1.9,<1.10
 pandas>=3.0,<3.1
-opentelemetry-proto<1.45
+opentelemetry-proto<1.46

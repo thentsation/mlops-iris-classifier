@@ -555,8 +555,6 @@ tqdm==4.70.1
     #   scmrepo
 typing-extensions==4.16.0
     # via
-    #   aiohttp
-    #   aiosignal
     #   alembic
     #   anyio
     #   asyncssh
@@ -571,7 +569,6 @@ typing-extensions==4.16.0
     #   pydantic-core
     #   rich-toolkit
     #   sqlalchemy
-    #   starlette
     #   typing-inspection
 typing-inspection==0.4.4
     # via

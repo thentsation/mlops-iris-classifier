@@ -1,5 +1,8 @@
 # Iris Classifier MLOps Project
 
+[![Python CI](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_python.yaml/badge.svg)](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_python.yaml)
+[![Docker CI/CD](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_docker.yaml/badge.svg)](https://github.com/thentsation/mlops-iris-classifier/actions/workflows/pipeline_docker.yaml)
+
 > Leia em [português](README.pt-br.md).
 
 An end-to-end MLOps example for an Iris classifier: [DVC](https://dvc.org/) for data versioning, [MLflow](https://mlflow.org/) for experiment tracking, and [BentoML](https://www.bentoml.com/) for model serving, on top of scikit-learn.
@@ -48,11 +51,7 @@ make format       # ruff format
 make typecheck    # mypy
 ```
 
-CI and deploy run on the platform's Jenkins (`Jenkinsfile` → `appPipeline` from the `platform` Shared Library, repo devops-platform), triggered by webhooks; there are no GitHub Actions.
-
-- **PRs and branches** — contract validation; `docker build --target test` (`ruff check`, `ruff format --check`, `mypy`, `pytest` with ≥90% coverage on Python 3.11 and 3.12, tool versions from `config/requirements-dev.txt`); `pip-audit` on `config/requirements.lock`; Trivy (CRITICAL/HIGH) on the runtime image.
-- **main** — all of the above, then build, smoke test, push to OCIR, deploy behind Traefik at https://mlops-iris.137-131-175-7.sslip.io with automatic rollback, release with python-semantic-release (version, CHANGELOG, tag and GitHub release) and a rebuild of the portfolio. Also rebuilt every Monday to pick up security patches.
-- **Dependencies** — Renovate (Jenkins job `platform/renovate`, `renovate.json` → devops-platform preset): daily updates, weekly lockfile maintenance, Dependency Dashboard issue and auto-merge of patch/minor after Jenkins passes.
+CI runs ruff, pytest (coverage gate), mypy and pip-audit on every push/PR, plus a scheduled daily run. Docker images are built (after `dvc pull`), scanned with Trivy, and published to GHCR on `main`. Dependabot keeps pip, the Docker base image, and GitHub Actions up to date, with patch/minor bumps auto-merged. Releases are tagged automatically with [python-semantic-release](https://python-semantic-release.readthedocs.io/).
 
 ## Data versioning with DVC
 

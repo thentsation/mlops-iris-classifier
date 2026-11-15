@@ -2,6 +2,64 @@
 
 <!-- version list -->
 
+## v1.0.6 (2026-11-15)
+
+### Bug Fixes
+
+- **docker**: Use python 3.14 so the wheels install, and upgrade pip so the scan passes
+  ([#40](https://github.com/thentsation/mlops-iris-classifier/pull/40),
+  [`5cabc09`](https://github.com/thentsation/mlops-iris-classifier/commit/5cabc098ef3bf05c3552d5a5af4d604d2e77d64c))
+
+### Chores
+
+- **ci**: Bump astral-sh/setup-uv from 10.3.2 to 10.3.3
+  ([#31](https://github.com/thentsation/mlops-iris-classifier/pull/31),
+  [`890926f`](https://github.com/thentsation/mlops-iris-classifier/commit/890926f66e24dfff18b0b204350bb1b9961c4028))
+
+- **ci**: Bump peter-evans/create-pull-request from 8.1.1 to 8.1.2
+  ([#35](https://github.com/thentsation/mlops-iris-classifier/pull/35),
+  [`c982d62`](https://github.com/thentsation/mlops-iris-classifier/commit/c982d626a749b68ee45c484fe26d8e80262c1eb1))
+
+- **ci**: Bump peter-evans/create-pull-request from 8.1.2 to 8.1.3
+  ([#39](https://github.com/thentsation/mlops-iris-classifier/pull/39),
+  [`79dbc6b`](https://github.com/thentsation/mlops-iris-classifier/commit/79dbc6b8ef9708683875b14d53258d9c21c9df8a))
+
+- **deps**: Bump mypy from 2.4.0 to 2.4.1 in /config
+  ([#33](https://github.com/thentsation/mlops-iris-classifier/pull/33),
+  [`47eaf00`](https://github.com/thentsation/mlops-iris-classifier/commit/47eaf00a4083c28b8337ae46a75d0c980a01ea7d))
+
+- **deps**: Bump pytest from 9.1.1 to 9.2.0 in /config
+  ([#32](https://github.com/thentsation/mlops-iris-classifier/pull/32),
+  [`bd0a09f`](https://github.com/thentsation/mlops-iris-classifier/commit/bd0a09f9c40ef254a81c3a748ac0804f38fde7ce))
+
+- **deps**: Bump python from 3.12-slim to 3.15-slim in /docker
+  ([#34](https://github.com/thentsation/mlops-iris-classifier/pull/34),
+  [`14d8b6c`](https://github.com/thentsation/mlops-iris-classifier/commit/14d8b6c485fd59259a7cb84a4c8e894a203fce38))
+
+- **deps**: Bump ruff from 0.17.2 to 0.17.3 in /config
+  ([#30](https://github.com/thentsation/mlops-iris-classifier/pull/30),
+  [`1310353`](https://github.com/thentsation/mlops-iris-classifier/commit/13103530007f85be0c1bb022d6e973af7fc11353))
+
+- **deps**: Bump ruff from 0.17.3 to 0.17.4 in /config
+  ([#38](https://github.com/thentsation/mlops-iris-classifier/pull/38),
+  [`0e87467`](https://github.com/thentsation/mlops-iris-classifier/commit/0e874677f463ef961c30c2c6c1cc68f26f4ec4ef))
+
+- **deps**: Update bentoml requirement in /config
+  ([#29](https://github.com/thentsation/mlops-iris-classifier/pull/29),
+  [`2bec9d4`](https://github.com/thentsation/mlops-iris-classifier/commit/2bec9d422fe34bbb188665faffe968614da662ec))
+
+- **deps**: Update lockfile ([#28](https://github.com/thentsation/mlops-iris-classifier/pull/28),
+  [`c57acb1`](https://github.com/thentsation/mlops-iris-classifier/commit/c57acb185b63b3334663bd241ae536af2826de5c))
+
+- **deps**: Update mlflow requirement in /config
+  ([#37](https://github.com/thentsation/mlops-iris-classifier/pull/37),
+  [`d80471b`](https://github.com/thentsation/mlops-iris-classifier/commit/d80471be704d6dd660089dda6ef40890bd7cfa3a))
+
+- **deps**: Update pandas requirement in /config
+  ([#36](https://github.com/thentsation/mlops-iris-classifier/pull/36),
+  [`5697a49`](https://github.com/thentsation/mlops-iris-classifier/commit/5697a498d8a7ca24cf192a1d7da67b079311d3f7))
+
+
 ## v1.0.5 (2026-10-26)
 
 ### Bug Fixes
